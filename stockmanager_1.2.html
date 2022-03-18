@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>재고관리</title>
+    <script>
+      var scan = [];
+      function pressEnter(){
+        scan.push(document.getElementById('intext').value);
+        document.getElementById('intext').value=null;
+      }
+      var list ={
+        "8801121028377":'원두(500g)',
+        "4047025249089":'우유(1L)',
+        "4047025663908":'바나나파우더(300g)',
+        "4047025663861":'초코파우더(300g)'
+      }
+      var list_key = Object.keys(list);
+      var list_value = Object.values(list);
+      function inspection(){
+          var i=0;
+          while(i<list_key.length){
+            if(scan.includes(list_key[i])){
+              document.querySelector('textarea').value+=list_value[i]+" 재고량 : "+scan.filter(element => list_key[i] === element).length;
+              document.querySelector('textarea').value+='\n';
+              } else {}
+              i=i+1;
+            }
+          }
+    </script>
+    <style media="screen">
+    form{
+      display:grid;
+      grid-template-columns: repeat(4,100px);
+      grid-auto-raw:100px;
+      grid-gap:5px;
+      }
+
+    #button {
+      color: black;
+      border: 1px solid black;
+      border-radius: 0%;
+    }
+
+    #intext{
+        grid-column: span 3;
+        border:1px solid black;
+        border-radius: 0%;
+      }
+    textarea {
+        grid-column: span 4;
+        text-align: left;
+        padding: 0px;
+        border: 1px solid black;
+        border-radius: 0%;
+      }
+    textarea::placeholder{
+        text-align: center;
+        line-height: 100px;
+      }
+    body{
+        display: flex;
+        flex-direction:column;
+        justify-content: top;
+        align-items: center;
+        height: 100%;
+        color: black;
+    </style>
+  </head>
+
+  <body>
+    <h1> 재고 관리 </h1>
+    <form name="form" autocomplete="off">
+      <input id="intext" type="text" placeholder="이곳을 클릭한 뒤, 바코드를 스캔하세요." onkeyup="if(window.event.keyCode==13){pressEnter();}" style = "text-align:center;">
+      <input id="button" type="button" value="스캔완료" onclick="inspection()" autocomplete="off">
+      <textarea id="output" name="output" rows="42" cols="80" readonly placeholder="스캔이 완료되었다면 '스캔완료' 버튼을 눌러주세요."></textarea>
+      <input type="text" style="display:none;">
+    </form>
+  </body>
+</html>
